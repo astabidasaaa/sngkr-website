@@ -3,52 +3,87 @@
     <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
   </a>
 </p>
-<h1 align="center">
-  Gatsby minimal starter
-</h1>
 
-## 🚀 Quick start
+const StarFallStyle = styled.div`
+@function random_range($min, $max) {
+    $rand: random();
+    $random_range: $min + floor($rand \* (($max - $min) + 1));
+@return $random_range;
+}
 
-1.  **Create a Gatsby site.**
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 120%;
+// transform: rotate(-90deg);
 
-    Use the Gatsby CLI to create a new site, specifying the minimal starter.
+.star {
+$star-count: 50;
+--star-color: white;
+--star-tail-length: 16em;
+--star-tail-height: 0.2px;
+--star-width: calc(var(--star-tail-length) / 6);
+--fall-duration: 1s;
+--tail-fade-duration: var(--fall-duration);
 
-    ```shell
-    # create a new Gatsby site using the minimal starter
-    npm init gatsby
-    ```
+    position: absolute;
+    top: var(--top-offset);
+    left: 0;
+    width: var(--star-tail-length);
+    height: var(--star-tail-height);
+    color: var(--star-color);
+    background: linear-gradient(90deg, currentColor, transparent);
+    border-radius: 50%;
+    transform: translate3d(104em, 0, 0);
+    animation: fall var(--fall-duration) var(--fall-delay) linear infinite,
+      tail-fade var(--tail-fade-duration) var(--fall-delay) ease-out infinite;
 
-2.  **Start developing.**
+    @include sp-layout {
+      // For mobile performance, tail-fade animation will be removed QAQ
+      animation: fall var(--fall-duration) var(--fall-delay) linear infinite;
+    }
 
-    Navigate into your new site’s directory and start it up.
+    @for $i from 1 through $star-count {
+      &:nth-child(#{$i}) {
+        --star-tail-length: #{random_range(2000em, 2500em) / 100};
+        --top-offset: #{random_range(0vh, 10000vh) / 100};
+        --fall-duration: #{random_range(500, 2000s) / 1000};
+        --fall-delay: #{random_range(0, 10000s) / 1000};
+      }
+    }
 
-    ```shell
-    cd my-gatsby-site/
-    npm run develop
-    ```
+}
 
-3.  **Open the code and start customizing!**
+@keyframes fall {
+to {
+transform: translate3d(-30em, 0, 0);
+}
+}
 
-    Your site is now running at http://localhost:8000!
+@keyframes tail-fade {
+0%,
+50% {
+width: var(--star-tail-length);
+opacity: 1;
+}
 
-    Edit `src/pages/index.js` to see your site update in real-time!
+    70%,
+    80% {
+      width: 0;
+      opacity: 0.4;
+    }
 
-4.  **Learn more**
+    100% {
+      width: 0;
+      opacity: 0;
+    }
 
-    - [Documentation](https://www.gatsbyjs.com/docs/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+}
 
-    - [Tutorials](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-    - [Guides](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-    - [API Reference](https://www.gatsbyjs.com/docs/api-reference/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-    - [Plugin Library](https://www.gatsbyjs.com/plugins?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-    - [Cheat Sheet](https://www.gatsbyjs.com/docs/cheat-sheet/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
-
-## 🚀 Quick start (Gatsby Cloud)
-
-Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/):
-
-[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-minimal)
+@keyframes blink {
+50% {
+opacity: 0.6;
+}
+}
+`;
