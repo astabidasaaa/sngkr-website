@@ -2,8 +2,22 @@ import React, { useEffect, useState } from "react";
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
 import styled from "styled-components";
+import dataCovid from "../../../constants/covid-province.json";
 
 const IDMapStyle = styled.div`
+  #tooltip {
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    font: var(--regularWeight) var(--subPara) var(--sansSerif);
+    color: var(--white);
+    background-color: var(--gray);
+    text-transform: lowercase;
+
+    &:first-line {
+      text-transform: capitalize;
+    }
+  }
+
   #svgContainer {
     svg {
       // border: 1px solid red;
@@ -24,6 +38,10 @@ const IDMapStyle = styled.div`
 
 const IDMapApp = () => {
   const [dataPeta, setDataPeta] = useState({});
+  const [screenSize, setScreenSize] = useState({
+    x: window.innerWidth,
+    y: window.innerHeight,
+  });
 
   const svgContainerWidth = "100%",
     svgContainerHeight = window.innerWidth / 2.5;
@@ -36,16 +54,15 @@ const IDMapApp = () => {
       .attr("height", svgContainerHeight)
       .attr("viewBox", "-1517 580 512 100");
 
-    d3.select("#container")
-      .append("div")
-      .attr("id", "tooltip")
-      .style("opacity", 0);
+    d3.select("#container").append("div").attr("id", "tooltip");
+    // .style("opacity", 0);
 
     loadData();
   }, []);
 
   useEffect(() => {
     drawMap();
+    // console.log(dataCovid.list_data);
   }, [dataPeta]);
 
   const urls = [
@@ -59,21 +76,19 @@ const IDMapApp = () => {
       //   urls.map((url) => fetch(url).then((response) => response.json()))
       // );
       const response = await fetch(
-        "https://www.bps.go.id/indikator/indikator/download_json/0000/api_pub/UFpWMmJZOVZlZTJnc1pXaHhDV1hPQT09/da_01/1",
-        {
-          method: "GET",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
+        "https://raw.githubusercontent.com/ans-4175/peta-indonesia-geojson/master/indonesia-prov.geojson"
+        // {
+        //   method: "GET",
+        //   mode: "no-cors",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify(data),
+        // }
       );
       const data = await response.json();
-      console.log(data);
       //  console.log(data.features);
-      //  setDataPeta(data.features);
-      console.log(data);
+      setDataPeta(data.features);
     } catch (error) {
       console.log(error);
     }
@@ -81,12 +96,10 @@ const IDMapApp = () => {
 
   const svg = d3.select("#svgContainer").select("svg");
 
+  const tooltip = d3.select("#tooltip");
+
   const drawMap = () => {
-    // let projection = d3.geoMercator();
-
-    // let geoGenerator = d3.geoPath().projection(projection);
-
-    console.log(dataPeta);
+    // console.log(dataPeta);
 
     svg
       .selectAll("path")
@@ -98,10 +111,27 @@ const IDMapApp = () => {
       //   .attr("transform-origin", "center")
       .attr("fill", "tomato")
       .attr("data-province", (d, i) => {
-        // console.log(d3.geoPath());
         return d.properties.Propinsi;
       })
-      .attr("data-kode", (d, i) => d.properties.kode);
+      .attr("data-kode", (d, i) => d.properties.kode)
+      .on("mouseover", (d, i) => {
+        const areaName = d.srcElement.__data__.properties.Propinsi;
+
+        tooltip
+          .style("display", "block")
+          .style("opacity", 0.9)
+          .style("position", "absolute")
+          .style("top", `${d.pageY - 100}px`)
+          // .style("text-transform", "capitalize")
+          .style(
+            "left",
+            `${d.pageX + (screenSize.x / 2 < d.pageX ? -130 : 20)}px`
+          )
+          .html(`${areaName}`);
+      })
+      .on("mouseout", (d, i) => {
+        tooltip.style("display", "none").style("opacity", 0);
+      });
   };
 
   return (
