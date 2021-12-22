@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
 import USMapStyle from "../../../styles/map/USMapStyle";
+import useIsSsr from "../../IsSSR";
 
 const USMapApp = () => {
   const colorRange = [
@@ -21,15 +22,40 @@ const USMapApp = () => {
     "https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/counties.json",
   ];
 
+  const isSSR = useIsSsr();
+
   const [county_data, setCounty_data] = useState({});
   const [state_data, setState_data] = useState({});
   const [education_data, setEducation_data] = useState([]);
   const [screenSize, setScreenSize] = useState({
-    x: window.innerWidth,
-    y: window.innerHeight,
+    x: 480,
+    y: 320,
   });
 
   useEffect(() => {
+    if (isSSR) {
+      setScreenSize({
+        x: window.innerWidth,
+        y: window.innerHeight,
+      });
+    }
+  }, [isSSR]);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  useEffect(() => {
+    drawContainer();
+    drawMap();
+
+    return () => {
+      d3.select("#svgContainer").select("#svg").remove();
+      d3.select("#container").select("#tooltip").remove();
+    };
+  }, [education_data, screenSize]);
+
+  const drawContainer = () => {
     const svgContainerWidth =
         screenSize.x > 480 ? screenSize.x - 50 : screenSize.x,
       svgContainerHeight = screenSize.x / 1.5;
@@ -45,15 +71,7 @@ const USMapApp = () => {
       .append("div")
       .attr("id", "tooltip")
       .style("opacity", 0);
-
-    loadData();
-
-    console.log("useEffect");
-  }, []);
-
-  useEffect(() => {
-    drawMap();
-  }, [education_data, screenSize]);
+  };
 
   const loadData = async () => {
     try {
@@ -84,10 +102,11 @@ const USMapApp = () => {
     }
   };
 
-  const svg = d3.select("#svgContainer").select("svg");
-  const tooltip = d3.select("#tooltip");
-
   const drawMap = () => {
+    const svg = d3.select("#svgContainer").select("svg");
+
+    const tooltip = d3.select("#tooltip");
+
     const education = education_data.map((item, index) => {
       return item.bachelorsOrHigher;
     });
@@ -167,8 +186,6 @@ const USMapApp = () => {
     // legend
     const legendWidth = 400,
       legendHeight = 20;
-
-    // screenSize.x / 2;
 
     const g = svg
       .append("g")
