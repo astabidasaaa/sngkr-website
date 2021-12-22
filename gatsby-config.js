@@ -18,7 +18,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        icon: "src/images/icon.png",
+        icon: "src/images/sngkr_smiley_logo.png",
       },
     },
     "gatsby-transformer-remark",
