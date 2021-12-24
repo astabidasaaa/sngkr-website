@@ -43,6 +43,8 @@
     "react-icons": "^4.3.1",
     "react-typewriter-effect": "^1.1.0",
     "styled-components": "^5.3.3",
-    "topojson-client": "^3.1.0"
+    "topojson-client": "^3.1.0",
+    "typed.js": "^2.0.12",
+    "uifx": "^2.0.7"
   }
 }
