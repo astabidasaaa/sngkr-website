@@ -3,7 +3,6 @@ import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import useIsSsr from "../components/IsSSR";
 import Typed from "typed.js";
-import keypressSound from "../sounds/keypress.wav";
 
 const WelcomeTextStyle = styled.div`
   width: 100%;
