@@ -22,6 +22,7 @@
     "@mdx-js/react": "^1.6.22",
     "babel-plugin-styled-components": "^2.0.1",
     "d3": "^7.1.1",
+    "framer-motion": "^5.5.5",
     "gatsby": "^4.2.0",
     "gatsby-plugin-google-analytics": "^4.2.0",
     "gatsby-plugin-image": "^2.2.0",
@@ -44,7 +45,6 @@
     "react-typewriter-effect": "^1.1.0",
     "styled-components": "^5.3.3",
     "topojson-client": "^3.1.0",
-    "typed.js": "^2.0.12",
-    "uifx": "^2.0.7"
+    "typed.js": "^2.0.12"
   }
 }
