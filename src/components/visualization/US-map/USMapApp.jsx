@@ -26,7 +26,7 @@ const USMapApp = () => {
 
   const [county_data, setCounty_data] = useState({});
   const [state_data, setState_data] = useState({});
-  const [education_data, setEducation_data] = useState([]);
+  const [education_data, setEducation_data] = useState(false);
   const [screenSize, setScreenSize] = useState({
     x: 480,
     y: 320,
@@ -46,13 +46,22 @@ const USMapApp = () => {
   }, []);
 
   useEffect(() => {
-    drawContainer();
-    drawMap();
+    if (education_data) {
+      drawContainer();
+      drawMap();
 
-    return () => {
-      d3.select("#svgContainer").select("#svg").remove();
-      d3.select("#container").select("#tooltip").remove();
-    };
+      return () => {
+        d3.select("#svgContainer").select("#svg").remove();
+        d3.select("#container").select("#tooltip").remove();
+      };
+    } else {
+      document.getElementById("svgContainer").innerHTML =
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique culpa eligendi odio sit quia nisi soluta. Sit, quia alias sed iure repellendus, ullam porro ex a magnam corporis quo fuga.";
+
+      return () => {
+        document.getElementById("svgContainer").innerHTML = "";
+      };
+    }
   }, [education_data, screenSize]);
 
   const drawContainer = () => {
@@ -235,14 +244,14 @@ const USMapApp = () => {
     <USMapStyle id="container">
       <div id="main-map">
         <div id="svgContainer"></div>
-
-        <p id="source">
-          Data Source:{" "}
-          <a href="https://www.ers.usda.gov/data-products/county-level-data-sets/download-data.aspx">
-            USDA Economic Research Service
-          </a>
-        </p>
       </div>
+
+      <p id="source">
+        Data Source:{" "}
+        <a href="https://www.ers.usda.gov/data-products/county-level-data-sets/download-data.aspx">
+          USDA Economic Research Service
+        </a>
+      </p>
     </USMapStyle>
   );
 };

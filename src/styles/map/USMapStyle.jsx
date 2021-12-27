@@ -1,12 +1,19 @@
 import styled from "styled-components";
 
 const USMapStyle = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+
   #tooltip {
     padding: 0.5rem;
     border-radius: 0.3rem;
     font: var(--regularWeight) var(--subPara) var(--sansSerif);
     color: var(--white);
     background-color: var(--black);
+    display: none;
   }
 
   #svgContainer {
@@ -14,7 +21,6 @@ const USMapStyle = styled.div`
       .county {
         &:hover {
           fill: var(--gray);
-          // stroke: var(--white);
         }
       }
 
@@ -36,6 +42,10 @@ const USMapStyle = styled.div`
         }
       }
     }
+  }
+
+  p#source {
+    width: 100%;
   }
 `;
 

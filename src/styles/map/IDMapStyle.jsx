@@ -8,6 +8,7 @@ const IDMapStyle = styled.div`
     color: var(--white);
     background-color: var(--gray);
     text-transform: lowercase;
+    display: none;
 
     &:first-line {
       text-transform: capitalize;

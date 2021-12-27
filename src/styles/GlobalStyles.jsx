@@ -57,6 +57,8 @@ body {
     height: 100vh;
     background-color: var(--black);
     margin: 0;
+    overflow-x: hidden;
+
 }
 
 .main-body {
@@ -80,6 +82,10 @@ body {
         align-items: center;
         justify-content: center;
         gap: 6rem;
+
+        @media (max-width: 768px) {
+          gap: 3.5rem;
+        }
 
       }
 
