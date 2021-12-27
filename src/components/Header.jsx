@@ -21,12 +21,8 @@ const navMenu = [
     url: "/tools",
   },
   {
-    title: "ID Map",
-    url: "/visualization/ID-map",
-  },
-  {
-    title: "US Map",
-    url: "/visualization/US-map",
+    title: "Visualization",
+    url: "/visualization",
   },
 ];
 
