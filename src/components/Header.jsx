@@ -1,33 +1,17 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useStaticQuery, Link, graphql } from "gatsby";
 import styled from "styled-components";
-// import Burger from "./Burger";
-// import Navigation from "./Navigation";
-// import MenuContext from "./MenuContext";
-// import SearchContext from "./SearchContext"
-// import { HeaderStyles } from "../styles/NavStyles";
-
-const navMenu = [
-  {
-    title: "Home",
-    url: "/",
-  },
-  {
-    title: "About",
-    url: "/about",
-  },
-  {
-    title: "Tools",
-    url: "/tools",
-  },
-  {
-    title: "Visualization",
-    url: "/visualization",
-  },
-];
+import Navigation from "./Navigation";
+import BurgerButton from "./BurgerButton";
+import MenuContext from "./MenuContext";
 
 const HeaderStyles = styled.header`
   width: 100%;
+  position: sticky;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  background-color: var(--black);
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -42,23 +26,6 @@ const HeaderStyles = styled.header`
       fill: var(--white);
     }
   }
-`;
-
-const NavStyles = styled.nav`
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  box-sizing: border-box;
-
-  // a {
-  //   font-family: sans-serif;
-  //   font-size: 0.8rem;
-  //   font-weight: 700;
-  //   color: #fff;
-  //   text-decoration: none;
-  // }
 `;
 
 const Header = ({ Logo }) => {
@@ -83,42 +50,19 @@ const Header = ({ Logo }) => {
   //     return () => setScroll(false);
   //   }, []);
 
-  //   const [isOpen, setNav] = useContext(MenuContext);
-  // const [isSearch, setSearch] = useContext(SearchContext)
+  const [isOpen, setNav] = useContext(MenuContext);
 
-  //   const toggleNav = () => {
-  //     setNav([]);
-  //   };
+  const toggleNav = () => {
+    setNav([]);
+  };
 
   return (
-    // // <HeaderStyles className={scroll ? "scrolled" : null}>
-    //   <div className="head-cont">
-    //     {/* <Link to="/" aria-label="Homepage" onClick={toggleNav}> */}
-    //     {/* <Logo /> */}
-    //     {/* </Link> */}
-    //     {/* <Burger /> */}
-    //     Navigation
-    //   </div>
-    //   {/* <Navigation /> */}
-    // {/* </HeaderStyles> */}
     <HeaderStyles>
       <div id="header-logo">
         <Logo />
       </div>
-      <NavStyles aria-labelledby="primary-navigation">
-        {navMenu.map((menuItem) => {
-          return (
-            <Link
-              to={menuItem.url}
-              key={`menuItem-${menuItem.title}`}
-              className="menu-header"
-              activeClassName="active"
-            >
-              {menuItem.title}
-            </Link>
-          );
-        })}
-      </NavStyles>
+      <BurgerButton />
+      <Navigation />
     </HeaderStyles>
   );
 };
