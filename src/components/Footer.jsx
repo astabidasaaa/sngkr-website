@@ -86,6 +86,7 @@ const FooterStyle = styled.footer`
               margin: 0;
             }
           }
+
           a {
             &.menu-footer {
               font-size: var(--subPara);
@@ -119,7 +120,7 @@ const Footer = ({ Logo }) => {
               </Link>
             </li>
             <li>
-              <Link className="menu-footer" to="/datavis">
+              <Link className="menu-footer" to="/visualization">
                 Visualization
               </Link>
             </li>
