@@ -36,8 +36,11 @@ a {
       text-decoration: none;
     }
 
-    &:focus-visible:
-      outline: 3px solid var(--white);
+    &:focus-visible {
+      border: none;
+      outline: 2px solid var(--white);
+      outline-offset: 5px;
+    }
 
     &.menu-header {
       position: relative;
