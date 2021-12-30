@@ -129,13 +129,23 @@ const Footer = ({ Logo }) => {
         <div className="menu right">
           <ul>
             <li>
-              <a className="menu-footer" href="#">
+              <a
+                className="menu-footer"
+                href="https://www.instagram.com/astabidasaaa/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Instagram
               </a>
             </li>
             <li>
-              <a className="menu-footer" href="#">
-                Facebook
+              <a
+                className="menu-footer"
+                href="https://github.com/astabidasaaa"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Github
               </a>
             </li>
           </ul>
