@@ -55,8 +55,7 @@ const USMapApp = () => {
         d3.select("#container").select("#tooltip").remove();
       };
     } else {
-      document.getElementById("svgContainer").innerHTML =
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique culpa eligendi odio sit quia nisi soluta. Sit, quia alias sed iure repellendus, ullam porro ex a magnam corporis quo fuga.";
+      document.getElementById("svgContainer").innerHTML = "Now loading...";
 
       return () => {
         document.getElementById("svgContainer").innerHTML = "";

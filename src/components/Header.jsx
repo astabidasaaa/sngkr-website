@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useStaticQuery, Link, graphql } from "gatsby";
+import React, { useContext } from "react";
+import { useStaticQuery, graphql } from "gatsby";
 import styled from "styled-components";
 import Navigation from "./Navigation";
 import BurgerButton from "./BurgerButton";

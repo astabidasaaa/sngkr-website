@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 // import TypeWriterEffect from "react-typewriter-effect";
 import styled from "styled-components";
 import useIsSsr from "../components/IsSSR";
@@ -23,7 +23,6 @@ const WelcomeTextStyle = styled.div`
 
 const IndexPage = () => {
   const isSSR = useIsSsr();
-  const el = useRef(null);
 
   useEffect(() => {
     const typed = new Typed(".typed1", {
