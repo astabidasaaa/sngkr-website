@@ -83,6 +83,7 @@ const Navigation = () => {
             key={`menuItem-${menuItem.title}`}
             className="menu-header"
             activeClassName="active"
+            partiallyActive={menuItem.title !== "Home"}
             onClick={toggleNav}
           >
             {menuItem.title}
